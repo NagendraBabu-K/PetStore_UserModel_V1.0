@@ -348,6 +348,92 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Delete Product from Cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "var jsonData=pm.response.json();\r",
+              "pm.test(\"Checking Success Message in Response: \", ()=>\r",
+              "{\r",
+              "    pm.expect(jsonData.success).to.eql(\"Success: You have modified your shopping cart!\")\r",
+              "});\r",
+              "\r",
+              "pm.collectionVariables.unset(\"api_token_val\");\r",
+              "pm.collectionVariables.unset(\"product_id\");\r",
+              "pm.collectionVariables.unset(\"quantity\");\r",
+              "pm.collectionVariables.unset(\"cart_id\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "{{api_token_val}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "api_token",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "query",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "key",
+              "value": "{{cart_id}}",
+              "type": "text",
+              "uuid": "155d521d-d19a-446b-902c-241d38822ee6"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://192.168.137.1/opencart/upload/index.php?route=api/cart/remove",
+          "protocol": "http",
+          "host": [
+            "192",
+            "168",
+            "137",
+            "1"
+          ],
+          "path": [
+            "opencart",
+            "upload",
+            "index.php"
+          ],
+          "query": [
+            {
+              "key": "route",
+              "value": "api/cart/remove"
+            }
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
